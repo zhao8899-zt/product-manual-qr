@@ -158,31 +158,45 @@
   }
 
   /* ---------- 文件上传 ---------- */
+  // v3.0: 使用 base64 JSON 上传（兼容 Netlify Functions）
   function uploadFile(file, productId, onProgress, callback) {
-    var formData = new FormData();
-    formData.append("file", file);
+    var reader = new FileReader();
+    reader.onload = function (e) {
+      var base64Data = e.target.result.split(",")[1]; // Remove data:... prefix
 
-    var xhr = new XMLHttpRequest();
-    if (onProgress) {
-      xhr.upload.addEventListener("progress", function (e) {
-        if (e.lengthComputable) {
-          onProgress(Math.round((e.loaded / e.total) * 100));
+      if (onProgress) onProgress(50); // Reading done
+
+      var xhr = new XMLHttpRequest();
+      if (onProgress) {
+        xhr.upload.addEventListener("progress", function (e) {
+          if (e.lengthComputable) {
+            onProgress(Math.round((e.loaded / e.total) * 100));
+          }
+        });
+      }
+      xhr.addEventListener("load", function () {
+        if (xhr.status === 200) {
+          try { callback(null, JSON.parse(xhr.responseText)); }
+          catch (e) { callback(e); }
+        } else {
+          callback(new Error("Upload failed: " + xhr.status + " " + xhr.responseText));
         }
       });
-    }
-    xhr.addEventListener("load", function () {
-      if (xhr.status === 200) {
-        try { callback(null, JSON.parse(xhr.responseText)); }
-        catch (e) { callback(e); }
-      } else {
-        callback(new Error("Upload failed: " + xhr.status + " " + xhr.responseText));
-      }
-    });
-    xhr.addEventListener("error", function () {
-      callback(new Error("Network error during upload"));
-    });
-    xhr.open("POST", "/api/upload?productId=" + encodeURIComponent(productId || "general"));
-    xhr.send(formData);
+      xhr.addEventListener("error", function () {
+        callback(new Error("Network error during upload"));
+      });
+      xhr.open("POST", "/api/upload");
+      xhr.setRequestHeader("Content-Type", "application/json");
+      xhr.send(JSON.stringify({
+        fileName: file.name,
+        fileContent: base64Data,
+        productId: productId || "general",
+      }));
+    };
+    reader.onerror = function () {
+      callback(new Error("Failed to read file"));
+    };
+    reader.readAsDataURL(file);
   }
 
   function deleteFile(filePath, callback) {

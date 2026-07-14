@@ -63,9 +63,9 @@
   function updateServerStatus() {
     if (!D.server_status) return;
     if (PMQRStore.isServerMode()) {
-      D.server_status.innerHTML = '<span class="badge badge-green">🟢 服务器已连接</span>';
+      D.server_status.innerHTML = '<span class="badge badge-green">🟢 云端已连接（数据实时同步）</span>';
     } else {
-      D.server_status.innerHTML = '<span class="badge badge-orange">🟡 本地模式（需启动服务器才能上传文件）</span>';
+      D.server_status.innerHTML = '<span class="badge badge-orange">🟡 本地模式（连接云端后可上传文件和翻译）</span>';
     }
   }
 
@@ -338,7 +338,7 @@
       D.manual_pdf_url.value = manual.pdfUrl || "";
 
       // 判断是上传的文件还是链接
-      if (manual.pdfUrl && manual.pdfUrl.startsWith("/documents/")) {
+      if (manual.pdfUrl && (manual.pdfUrl.indexOf("/documents/") >= 0 || manual.pdfUrl.indexOf("raw.githubusercontent.com") >= 0)) {
         switchUploadMode("upload");
         showFileInfo(manual.pdfUrl, manual.fileType, manual.fileSize);
         uploadedFileUrl = manual.pdfUrl;
@@ -477,11 +477,8 @@
       return;
     }
 
-    if (!PMQRStore.isServerMode()) {
-      showToast("warning", "请先启动服务器 (node server.js) 才能上传文件。或切换到「粘贴链接」模式。");
-      switchUploadMode("link");
-      return;
-    }
+    // v3.0: 移除 isServerMode 检查，Netlify 环境下 API 始终可用
+    // 如果 API 不可用，上传会在请求时失败并提示错误
 
     // 开始上传
     D.file_drop_zone.style.display = "none";
@@ -515,7 +512,7 @@
     D.file_name.textContent = url.split("/").pop() || "已上传文件";
     D.file_size.textContent = formatSize(size) + " · " + (fileType || "").toUpperCase();
     // 显示自动翻译区域（仅对上传的文件且支持文本提取的格式）
-    if (D.auto_translate_section && url && url.startsWith("/documents/")) {
+    if (D.auto_translate_section && url && (url.indexOf("/documents/") >= 0 || url.indexOf("raw.githubusercontent.com") >= 0)) {
       var ext = (fileType || "").toLowerCase();
       if (ext === "pdf" || ext === "docx") {
         D.auto_translate_section.style.display = "block";
@@ -528,7 +525,7 @@
 
   function clearUploadedFile() {
     // 如果有关联的服务器文件，删除它
-    if (uploadedFileUrl && uploadedFileUrl.startsWith("/documents/")) {
+    if (uploadedFileUrl && (uploadedFileUrl.indexOf("/documents/") >= 0 || uploadedFileUrl.indexOf("raw.githubusercontent.com") >= 0)) {
       PMQRStore.deleteFile(uploadedFileUrl, function () {});
     }
     resetUploadState();
