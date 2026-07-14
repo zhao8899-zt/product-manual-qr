@@ -1,0 +1,340 @@
+{
+  "siteConfig": {
+    "brandName": "Product Manual Center",
+    "brandSub": "PRODUCT MANUAL CENTER",
+    "baseUrl": "https://ce996e1fbe5542ceab16448b9f9d7e4e.app.codebuddy.work",
+    "footerText": "Scan QR code to view product manuals",
+    "footerLink": "",
+    "footerLinkText": ""
+  },
+  "products": [
+    {
+      "id": "p001",
+      "name": "Smart Robot Vacuum X1 Pro",
+      "model": "X1-Pro",
+      "category": "Smart Home",
+      "description": "LiDAR navigation robot vacuum with mop function",
+      "createdAt": "2026-07-10T10:00:00Z",
+      "manuals": [
+        {
+          "id": "m001",
+          "language": "zh-CN",
+          "type": "installation",
+          "title": "安装指南 - 简体中文",
+          "pdfUrl": "",
+          "uploadDate": "2026-07-10",
+          "fileType": ""
+        },
+        {
+          "id": "m002",
+          "language": "zh-CN",
+          "type": "usage",
+          "title": "使用说明书 - 简体中文",
+          "pdfUrl": "",
+          "uploadDate": "2026-07-10",
+          "fileType": ""
+        },
+        {
+          "id": "m003",
+          "language": "en",
+          "type": "usage",
+          "title": "User Manual - English",
+          "pdfUrl": "",
+          "uploadDate": "2026-07-10",
+          "fileType": ""
+        },
+        {
+          "id": "m004",
+          "language": "ja",
+          "type": "usage",
+          "title": "取扱説明書 - 日本語",
+          "pdfUrl": "",
+          "uploadDate": "2026-07-10",
+          "fileType": ""
+        }
+      ]
+    },
+    {
+      "id": "p002",
+      "name": "Portable Bluetooth Speaker M3",
+      "model": "M3-Mini",
+      "category": "Audio",
+      "description": "IPX7 waterproof Bluetooth 5.3 speaker, 24h battery",
+      "createdAt": "2026-07-11T14:00:00Z",
+      "manuals": [
+        {
+          "id": "m011",
+          "language": "zh-CN",
+          "type": "usage",
+          "title": "使用说明书 - 简体中文",
+          "pdfUrl": "",
+          "uploadDate": "2026-07-11",
+          "fileType": ""
+        },
+        {
+          "id": "m012",
+          "language": "en",
+          "type": "usage",
+          "title": "User Manual - English",
+          "pdfUrl": "",
+          "uploadDate": "2026-07-11",
+          "fileType": ""
+        },
+        {
+          "id": "m013",
+          "language": "de",
+          "type": "usage",
+          "title": "Bedienungsanleitung - Deutsch",
+          "pdfUrl": "",
+          "uploadDate": "2026-07-11",
+          "fileType": ""
+        }
+      ]
+    },
+    {
+      "id": "fanlight001",
+      "name": "智能风扇灯 FL-2024-Pro",
+      "model": "FL-2024-Pro",
+      "category": "照明/风扇",
+      "description": "集照明、风扇、氛围灯于一体的智能家居产品，无刷直流电机，支持APP控制",
+      "i18n": {
+        "zh-CN": {
+          "name": "智能风扇灯 FL-2024-Pro",
+          "model": "FL-2024-Pro",
+          "description": "集照明、风扇、氛围灯于一体的智能家居产品，无刷直流电机，支持APP控制"
+        },
+        "en": {
+          "name": "Smart Fan Light FL-2024-Pro",
+          "model": "FL-2024-Pro",
+          "description": "An all-in-one smart home product combining lighting, fan and ambient light, featuring a brushless DC motor with APP control"
+        },
+        "ja": {
+          "name": "スマートファンランプ FL-2024-Pro",
+          "model": "FL-2024-Pro",
+          "description": "照明、ファン、アンビエントライトを一体化したスマートホーム製品、ブラシレスDCモーター搭載、APP制御対応"
+        },
+        "ko": {
+          "name": "스마트 팬 라이트 FL-2024-Pro",
+          "model": "FL-2024-Pro",
+          "description": "조명, 팬, 분위기 조명을 하나로 결합한 스마트 홈 제품, 브러시리스 DC 모터 탑재, APP 제어 지원"
+        },
+        "de": {
+          "name": "Intelligente Ventilatorleuchte FL-2024-Pro",
+          "model": "FL-2024-Pro",
+          "description": "All-in-One-Smart-Home-Produkt mit Beleuchtung, Ventilator und Ambientelicht, bürstenloser Gleichstrommotor, APP-Steuerung"
+        }
+      },
+      "createdAt": "2026-07-14T09:27:55.322Z",
+      "manuals": [
+        {
+          "id": "mmrkg7e1nupa0",
+          "language": "zh-CN",
+          "type": "installation",
+          "title": "风扇灯安装指南",
+          "pdfUrl": "/documents/fanlight001/original_zh_mrkhk8tv.html",
+          "fileType": "html",
+          "fileSize": 37780,
+          "uploadDate": "2026-07-14",
+          "isOriginal": true,
+          "isAutoTranslated": false
+        },
+        {
+          "id": "mmrkg7kccm9uo",
+          "language": "en",
+          "type": "installation",
+          "title": "Fan Lamp Installation Guide",
+          "pdfUrl": "/documents/fanlight001/translated_en_mrkg7ghw.html",
+          "fileType": "html",
+          "uploadDate": "2026-07-14",
+          "isAutoTranslated": true
+        },
+        {
+          "id": "mmrkg7kcdl1gc",
+          "language": "ja",
+          "type": "installation",
+          "title": "ファンランプ設置ガイド",
+          "pdfUrl": "/documents/fanlight001/translated_ja_mrkg7hfe.html",
+          "fileType": "html",
+          "uploadDate": "2026-07-14",
+          "isAutoTranslated": true
+        },
+        {
+          "id": "mmrkg7kcdndwf",
+          "language": "de",
+          "type": "installation",
+          "title": "Installationsanleitung für die Lüfterlampe",
+          "pdfUrl": "/documents/fanlight001/translated_de_mrkg7ih9.html",
+          "fileType": "html",
+          "uploadDate": "2026-07-14",
+          "isAutoTranslated": true
+        },
+        {
+          "id": "mmrkg7kcdvzxr",
+          "language": "ko",
+          "type": "installation",
+          "title": "팬 램프 설치 가이드",
+          "pdfUrl": "/documents/fanlight001/translated_ko_mrkg7kc7.html",
+          "fileType": "html",
+          "uploadDate": "2026-07-14",
+          "isAutoTranslated": true
+        },
+        {
+          "id": "mmrkg7lwnlum1",
+          "language": "zh-CN",
+          "type": "usage",
+          "title": "风扇灯使用说明书",
+          "pdfUrl": "/documents/fanlight001/original_zh_mrkhk8xj.html",
+          "fileType": "html",
+          "fileSize": 38026,
+          "uploadDate": "2026-07-14",
+          "isOriginal": true,
+          "isAutoTranslated": false
+        },
+        {
+          "id": "mmrkg7qn9xkcc",
+          "language": "en",
+          "type": "usage",
+          "title": "Fan Lamp Instructions for Use",
+          "pdfUrl": "/documents/fanlight001/translated_en_mrkg7myc.html",
+          "fileType": "html",
+          "uploadDate": "2026-07-14",
+          "isAutoTranslated": true
+        },
+        {
+          "id": "mmrkg7qn9ou66",
+          "language": "ja",
+          "type": "usage",
+          "title": "ファンランプの使用説明書",
+          "pdfUrl": "/documents/fanlight001/translated_ja_mrkg7odz.html",
+          "fileType": "html",
+          "uploadDate": "2026-07-14",
+          "isAutoTranslated": true
+        },
+        {
+          "id": "mmrkg7qn9z61x",
+          "language": "de",
+          "type": "usage",
+          "title": "Gebrauchsanweisung für die Lüfterlampe",
+          "pdfUrl": "/documents/fanlight001/translated_de_mrkg7pmu.html",
+          "fileType": "html",
+          "uploadDate": "2026-07-14",
+          "isAutoTranslated": true
+        },
+        {
+          "id": "mmrkg7qn94uv7",
+          "language": "ko",
+          "type": "usage",
+          "title": "팬 램프 사용 지침",
+          "pdfUrl": "/documents/fanlight001/translated_ko_mrkg7qn4.html",
+          "fileType": "html",
+          "uploadDate": "2026-07-14",
+          "isAutoTranslated": true
+        },
+        {
+          "id": "mmrkg7s7gqgr8",
+          "language": "zh-CN",
+          "type": "afterSales",
+          "title": "风扇灯售后服务政策",
+          "pdfUrl": "/documents/fanlight001/original_zh_mrkhk8zm.html",
+          "fileType": "html",
+          "fileSize": 37799,
+          "uploadDate": "2026-07-14",
+          "isOriginal": true,
+          "isAutoTranslated": false
+        },
+        {
+          "id": "mmrkg7xellx4u",
+          "language": "en",
+          "type": "afterSales",
+          "title": "Fan lamp after-sales service policy",
+          "pdfUrl": "/documents/fanlight001/translated_en_mrkg7teb.html",
+          "fileType": "html",
+          "uploadDate": "2026-07-14",
+          "isAutoTranslated": true
+        },
+        {
+          "id": "mmrkg7xelzxi9",
+          "language": "ja",
+          "type": "afterSales",
+          "title": "ファンランプアフターサービスポリシー",
+          "pdfUrl": "/documents/fanlight001/translated_ja_mrkg7uxw.html",
+          "fileType": "html",
+          "uploadDate": "2026-07-14",
+          "isAutoTranslated": true
+        },
+        {
+          "id": "mmrkg7xell8vw",
+          "language": "de",
+          "type": "afterSales",
+          "title": "LÜFTERLAMPEN-KUNDENSER",
+          "pdfUrl": "/documents/fanlight001/translated_de_mrkg7w5e.html",
+          "fileType": "html",
+          "uploadDate": "2026-07-14",
+          "isAutoTranslated": true
+        },
+        {
+          "id": "mmrkg7xem75fp",
+          "language": "ko",
+          "type": "afterSales",
+          "title": "팬 램프 판매 후 서비스 정책",
+          "pdfUrl": "/documents/fanlight001/translated_ko_mrkg7xec.html",
+          "fileType": "html",
+          "uploadDate": "2026-07-14",
+          "isAutoTranslated": true
+        },
+        {
+          "id": "mmrkg7yyligi9",
+          "language": "zh-CN",
+          "type": "safety",
+          "title": "风扇灯安规认证信息",
+          "pdfUrl": "/documents/fanlight001/original_zh_mrkhk91p.html",
+          "fileType": "html",
+          "fileSize": 38299,
+          "uploadDate": "2026-07-14",
+          "isOriginal": true,
+          "isAutoTranslated": false
+        },
+        {
+          "id": "mmrkg88e1tjko",
+          "language": "en",
+          "type": "safety",
+          "title": "Fan lamp safety certification information",
+          "pdfUrl": "/documents/fanlight001/translated_en_mrkg7zus.html",
+          "fileType": "html",
+          "uploadDate": "2026-07-14",
+          "isAutoTranslated": true
+        },
+        {
+          "id": "mmrkg88e1trd8",
+          "language": "ja",
+          "type": "safety",
+          "title": "ファンランプ安全認証情報",
+          "pdfUrl": "/documents/fanlight001/translated_ja_mrkg81jj.html",
+          "fileType": "html",
+          "uploadDate": "2026-07-14",
+          "isAutoTranslated": true
+        },
+        {
+          "id": "mmrkg88e1t4ed",
+          "language": "de",
+          "type": "safety",
+          "title": "Informationen zur Sicherheitszertifizierung der Lüfterlampe",
+          "pdfUrl": "/documents/fanlight001/translated_de_mrkg82uf.html",
+          "fileType": "html",
+          "uploadDate": "2026-07-14",
+          "isAutoTranslated": true
+        },
+        {
+          "id": "mmrkg88e22zpm",
+          "language": "ko",
+          "type": "safety",
+          "title": "팬 램프 안전 인증 정보",
+          "pdfUrl": "/documents/fanlight001/translated_ko_mrkg88dn.html",
+          "fileType": "html",
+          "uploadDate": "2026-07-14",
+          "isAutoTranslated": true
+        }
+      ]
+    }
+  ]
+}

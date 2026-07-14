@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>产品说明书二维码管理系统 v2.0</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+</head>
+<body>
+
+  <!-- ========== 顶部导航 ========== -->
+  <header class="admin-header">
+    <div class="logo">
+      <div class="icon">QR</div>
+      <span>产品说明书二维码管理系统</span>
+      <span style="font-size:0.7rem;background:var(--primary);color:#fff;padding:2px 8px;border-radius:10px;margin-left:6px;">v2.0</span>
+    </div>
+    <div class="header-actions">
+      <span id="server-status"></span>
+      <button class="btn btn-secondary btn-sm" id="btn-config">⚙️ 站点配置</button>
+      <button class="btn btn-secondary btn-sm" id="btn-export">📤 导出</button>
+      <button class="btn btn-secondary btn-sm" id="btn-import">📥 导入</button>
+      <button class="btn btn-secondary btn-sm" id="btn-reset">🗑️ 清空</button>
+      <input type="file" id="import-input" accept=".json" style="display:none" />
+    </div>
+  </header>
+
+  <!-- ========== 主内容区 ========== -->
+  <main class="admin-main">
+
+    <!-- 统计卡片 -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-icon" style="background:var(--primary-light);color:var(--primary);">📦</div>
+        <div class="stat-info"><div class="stat-value" id="stat-products">0</div><div class="stat-label">产品总数</div></div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon" style="background:var(--success-light);color:var(--success);">📄</div>
+        <div class="stat-info"><div class="stat-value" id="stat-manuals">0</div><div class="stat-label">说明书总数</div></div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon" style="background:var(--warning-light);color:var(--warning);">🌐</div>
+        <div class="stat-info"><div class="stat-value" id="stat-languages">0</div><div class="stat-label">支持语种</div></div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon" style="background:var(--info-light);color:var(--info);">📑</div>
+        <div class="stat-info"><div class="stat-value" id="stat-types">0</div><div class="stat-label">文档类型</div></div>
+      </div>
+    </div>
+
+    <!-- 工具栏 -->
+    <div class="toolbar">
+      <div class="toolbar-left">
+        <div class="search-box">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="search-input" placeholder="搜索产品名称、型号、分类..." />
+        </div>
+      </div>
+      <div class="toolbar-right">
+        <button class="btn btn-primary" id="btn-add-product">➕ 添加产品</button>
+      </div>
+    </div>
+
+    <!-- 产品表格 -->
+    <div class="product-table-wrapper">
+      <table class="product-table">
+        <thead>
+          <tr>
+            <th>产品名称</th>
+            <th class="hide-mobile">分类</th>
+            <th>说明书</th>
+            <th class="hide-mobile">语种</th>
+            <th class="hide-mobile">访问链接</th>
+            <th>操作</th>
+          </tr>
+        </thead>
+        <tbody id="product-table-body"></tbody>
+      </table>
+    </div>
+
+    <!-- 使用说明 -->
+    <div class="info-panel">
+      <h3>📋 使用说明</h3>
+      <ol>
+        <li><strong>添加产品</strong>：点击「添加产品」填写产品信息</li>
+        <li><strong>上传说明书</strong>：在产品编辑页添加说明书，支持<b>直接上传 PDF/Word 文件</b>或粘贴链接</li>
+        <li><strong>生成二维码</strong>：点击产品行的二维码按钮，下载/打印贴在彩盒和机身上</li>
+        <li><strong>扫码访问</strong>：全球客户扫码后自动检测语言，查看/下载对应语种说明书</li>
+        <li><strong>部署上线</strong>：将整个文件夹部署到服务器，在「站点配置」填写域名即可</li>
+      </ol>
+    </div>
+
+  </main>
+
+  <!-- ========== 产品编辑模态框 ========== -->
+  <div class="modal-overlay modal-lg" id="product-modal">
+    <div class="modal modal-lg">
+      <div class="modal-header">
+        <h3 id="product-modal-title">添加产品</h3>
+        <button class="modal-close" data-modal-close>&times;</button>
+      </div>
+      <div class="modal-body">
+        <form id="product-form">
+          <div class="form-row">
+            <div class="form-group">
+              <label>产品名称 <span class="required">*</span></label>
+              <input type="text" class="form-control" id="product-name" placeholder="如：风扇灯T001" required />
+            </div>
+            <div class="form-group">
+              <label>产品型号</label>
+              <input type="text" class="form-control" id="product-model" placeholder="如：T001" />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>产品分类</label>
+              <input type="text" class="form-control" id="product-category" placeholder="如：照明设备" list="category-list" />
+              <datalist id="category-list">
+                <option value="智能家居"></option>
+                <option value="音频设备"></option>
+                <option value="厨房电器"></option>
+                <option value="个人护理"></option>
+                <option value="照明设备"></option>
+                <option value="安防设备"></option>
+                <option value="电脑数码"></option>
+                <option value="运动健康"></option>
+              </datalist>
+            </div>
+            <div class="form-group">
+              <label>产品描述</label>
+              <input type="text" class="form-control" id="product-desc" placeholder="简要描述产品特点" />
+            </div>
+          </div>
+        </form>
+
+        <div class="manual-list-section">
+          <h4>
+            <span>📄 说明书管理</span>
+            <button type="button" class="btn btn-success btn-sm" id="btn-add-manual" style="display:none;">➕ 添加说明书</button>
+          </h4>
+          <div id="manual-list"></div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" data-modal-close>取消</button>
+        <button class="btn btn-primary" type="submit" form="product-form">💾 保存产品</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== 说明书编辑模态框 ========== -->
+  <div class="modal-overlay" id="manual-modal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 id="manual-modal-title">添加说明书</h3>
+        <button class="modal-close" data-modal-close>&times;</button>
+      </div>
+      <div class="modal-body">
+        <form id="manual-form">
+          <div class="form-row">
+            <div class="form-group">
+              <label>语言 <span class="required">*</span></label>
+              <select class="form-control" id="manual-language"></select>
+            </div>
+            <div class="form-group">
+              <label>类型 <span class="required">*</span></label>
+              <select class="form-control" id="manual-type"></select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>说明书标题</label>
+            <input type="text" class="form-control" id="manual-title" placeholder="留空则自动生成（类型 - 语言）" />
+          </div>
+
+          <!-- 文件来源切换 -->
+          <div class="form-group">
+            <label>说明书文件 <span class="required">*</span></label>
+            <div class="upload-mode-tabs" id="upload-mode-tabs">
+              <button type="button" class="upload-tab active" id="tab-upload">📁 上传文件</button>
+              <button type="button" class="upload-tab" id="tab-link">🔗 粘贴链接</button>
+            </div>
+          </div>
+
+          <!-- 上传模式 -->
+          <div id="upload-area">
+            <div class="file-drop-zone" id="file-drop-zone">
+              <div style="font-size:2.5rem;margin-bottom:8px;">📄</div>
+              <div style="font-weight:600;margin-bottom:4px;">点击或拖拽文件到此处</div>
+              <div style="font-size:0.78rem;color:var(--text-secondary);">支持 PDF / DOC / DOCX，最大 100MB</div>
+              <input type="file" id="file-input" accept=".pdf,.doc,.docx" style="display:none" />
+            </div>
+            <!-- 上传进度 -->
+            <div id="upload-progress" style="display:none;">
+              <div style="background:var(--bg);border-radius:var(--radius-sm);padding:12px;">
+                <div id="upload-progress-text" style="font-size:0.825rem;margin-bottom:8px;">上传中... 0%</div>
+                <div style="background:var(--border);border-radius:10px;height:8px;overflow:hidden;">
+                  <div id="upload-progress-bar" style="background:var(--primary);height:100%;width:0%;transition:width 0.2s ease;border-radius:10px;"></div>
+                </div>
+              </div>
+            </div>
+            <!-- 已上传文件信息 -->
+            <div id="file-info" style="display:none;">
+              <div style="background:var(--success-light);border-radius:var(--radius-sm);padding:12px;display:flex;align-items:center;justify-content:space-between;">
+                <div>
+                  <div style="font-weight:600;font-size:0.875rem;">✅ <span id="file-name"></span></div>
+                  <div style="font-size:0.75rem;color:var(--text-secondary);" id="file-size"></div>
+                </div>
+                <button type="button" class="btn btn-danger btn-sm" id="btn-clear-file">🗑️ 删除</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- 链接模式 -->
+          <div id="link-area" style="display:none;">
+            <input type="url" class="form-control" id="manual-pdf-url" placeholder="https://example.com/manuals/product/usage_en.pdf" />
+            <div class="form-hint">填写 PDF/Word 文件的完整 URL（官网或云盘直链）</div>
+          </div>
+
+          <!-- 自动翻译区域 -->
+          <div id="auto-translate-section" style="display:none;margin-top:16px;">
+            <div style="background:linear-gradient(135deg,#e8f0fe,#f0e8fe);border:1px solid #c8b6ff;border-radius:12px;padding:16px;">
+              <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;">
+                <span style="font-size:1.25rem;">🌍</span>
+                <div>
+                  <div style="font-weight:700;font-size:0.9rem;color:#1a237e;">自动翻译到其他语言</div>
+                  <div style="font-size:0.75rem;color:#5c6bc0;">AI 自动提取文档内容并翻译成选定的语种，生成可在线查看的翻译版</div>
+                </div>
+              </div>
+              <div id="translate-lang-list" style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px;"></div>
+              <button type="button" class="btn btn-primary" id="btn-auto-translate" style="width:100%;">
+                🚀 开始自动翻译
+              </button>
+              <div id="translate-progress" style="display:none;margin-top:10px;">
+                <div style="background:#e0e0e0;border-radius:10px;height:8px;overflow:hidden;">
+                  <div id="translate-progress-bar" style="background:linear-gradient(90deg,#1a73e8,#7b1fa2);height:100%;width:0%;transition:width 0.3s ease;border-radius:10px;"></div>
+                </div>
+                <div id="translate-progress-text" style="font-size:0.75rem;color:#5c6bc0;margin-top:6px;text-align:center;">准备中...</div>
+              </div>
+              <div id="translate-results" style="display:none;margin-top:10px;"></div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" data-modal-close>取消</button>
+        <button class="btn btn-primary" type="submit" form="manual-form">💾 保存说明书</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== 二维码模态框 ========== -->
+  <div class="modal-overlay" id="qr-modal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3>产品二维码</h3>
+        <button class="modal-close" data-modal-close>&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="qr-display">
+          <div id="qr-display"></div>
+          <div class="qr-product-name" id="qr-product-name"></div>
+          <div class="qr-product-model" id="qr-product-model"></div>
+          <div class="qr-url" id="qr-url"></div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" id="btn-preview-page">👁️ 预览落地页</button>
+        <button class="btn btn-secondary" id="btn-print-qr">🖨️ 打印</button>
+        <button class="btn btn-primary" id="btn-download-qr">⬇️ 下载二维码</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== 站点配置模态框 ========== -->
+  <div class="modal-overlay" id="config-modal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3>站点配置</h3>
+        <button class="modal-close" data-modal-close>&times;</button>
+      </div>
+      <div class="modal-body">
+        <form id="config-form">
+          <div class="form-row">
+            <div class="form-group">
+              <label>品牌名称</label>
+              <input type="text" class="form-control" id="config-brand-name" placeholder="如：Product Manual Center" />
+            </div>
+            <div class="form-group">
+              <label>品牌副标题</label>
+              <input type="text" class="form-control" id="config-brand-sub" placeholder="如：PRODUCT MANUAL CENTER" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label>基础 URL（部署域名）⚠️ 重要</label>
+            <input type="url" class="form-control" id="config-base-url" placeholder="https://manual.yourcompany.com" />
+            <div class="form-hint"><b>部署到服务器后必须填写实际域名！</b>否则二维码生成的是相对路径，手机扫码无法打开。</div>
+          </div>
+          <div class="form-group">
+            <label>底部文字（多语言自动适配）</label>
+            <input type="text" class="form-control" id="config-footer-text" placeholder="如：Scan QR code to view product manuals" />
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>底部链接文字</label>
+              <input type="text" class="form-control" id="config-footer-link-text" placeholder="如：Visit Website" />
+            </div>
+            <div class="form-group">
+              <label>底部链接地址</label>
+              <input type="url" class="form-control" id="config-footer-link" placeholder="https://www.yourcompany.com" />
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" data-modal-close>取消</button>
+        <button class="btn btn-primary" type="submit" form="config-form">💾 保存配置</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast 容器 -->
+  <div class="toast-container" id="toast-container"></div>
+  <!-- 打印布局 -->
+  <div class="qr-print-layout" id="print-layout"></div>
+
+  <!-- 脚本 -->
+  <script src="data.js"></script>
+  <script src="js/store.js"></script>
+  <script src="js/admin.js"></script>
+</body>
+</html>
